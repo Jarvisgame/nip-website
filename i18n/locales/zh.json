@@ -1,0 +1,70 @@
+{
+  "site": {
+    "name": "NIP",
+    "tagline": "命名数据网络内核态协议栈",
+    "description": "NIP 是一个围绕 iStack 的研究站点，记录把命名数据网络（NDN）带入操作系统内核的设计、实现与评测。"
+  },
+  "nav": {
+    "home": "首页",
+    "docs": "文档",
+    "blog": "博客",
+    "paper": "论文"
+  },
+  "home": {
+    "eyebrow": "NSDI '24 · 北京理工大学",
+    "title": "把命名数据网络带进操作系统内核",
+    "intro": "NDN 以名字取代地址，转发依赖逐包状态。iStack 首次将 NDN 协议栈实现在 OS 内核中，同时保持与现有地址制网络栈和 socket 接口的兼容。",
+    "ctaDocs": "阅读文档",
+    "ctaPaper": "查看论文",
+    "stats": {
+      "throughputValue": "6.50 Gbps",
+      "throughputLabel": "转发吞吐",
+      "speedupValue": "16.25×",
+      "speedupLabel": "相对 NDN-testbed 转发器",
+      "latencyValue": "46.08%",
+      "latencyLabel": "缓存包转发时延降低"
+    },
+    "designTitle": "三个核心设计",
+    "designIntro": "在通用操作系统中实现有状态、纯名字驱动的协议栈，需要同时处理名字解析、地址抽象与逐包状态的取舍。",
+    "designNrsTitle": "内核名字解析",
+    "designNrsDesc": "一套名字解析架构，同时支撑网络层转发与本地报文分流，让名字查找留在内核数据路径上。",
+    "designFacesTitle": "双层 Face 系统",
+    "designFacesDesc": "为 MAC/IP/端口等基于地址的网络接口提供统一抽象，使名字栈能与现有内核网络架构共存。",
+    "designSocketTitle": "Socket 兼容接口",
+    "designSocketDesc": "设计与 socket 兼容的接口以保持现有网络栈的使用方式，并配合紧凑转发数据结构降低内存占用。",
+    "resourcesTitle": "继续探索",
+    "resourcesIntro": "从文档了解系统设计，或直接阅读 NSDI '24 论文与演讲材料。",
+    "docsCardTitle": "项目文档",
+    "docsCardDesc": "背景、架构与评测结果的整理版本。",
+    "docsCardCta": "进入文档",
+    "blogCardTitle": "研究博客",
+    "blogCardDesc": "围绕 NDN、内核协议栈与状态化转发的笔记。",
+    "blogCardCta": "阅读博客",
+    "paperCardTitle": "论文与视频",
+    "paperCardDesc": "USENIX NSDI '24 官方页面、PDF 与演讲视频。",
+    "paperCardCta": "前往 USENIX"
+  },
+  "docs": {
+    "title": "文档",
+    "intro": "整理 iStack 的设计动机、系统结构与公开评测结果。当前为初始版本，内容会随项目推进继续补充。",
+    "empty": "当前语言下还没有文档。",
+    "back": "返回文档列表",
+    "sidebar": "本节目录"
+  },
+  "blog": {
+    "title": "博客",
+    "intro": "记录研究过程中的设计取舍、实现细节与实验观察。",
+    "empty": "当前语言下还没有文章。",
+    "readMore": "阅读全文",
+    "back": "返回博客列表",
+    "published": "发布于"
+  },
+  "footer": {
+    "desc": "NIP —— 围绕 iStack 的命名数据网络研究站点。",
+    "links": "相关链接",
+    "paper": "NSDI '24 论文",
+    "usenix": "USENIX 页面",
+    "builtWith": "基于 Nuxt 4、Nuxt UI 与 Nuxt Content 构建",
+    "rights": "保留所有权利。"
+  }
+}

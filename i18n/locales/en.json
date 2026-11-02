@@ -1,0 +1,70 @@
+{
+  "site": {
+    "name": "NIP",
+    "tagline": "An in-kernel protocol stack for Named Data Networking",
+    "description": "NIP is a research site around iStack, documenting the design, implementation and evaluation of bringing Named Data Networking (NDN) into the OS kernel."
+  },
+  "nav": {
+    "home": "Home",
+    "docs": "Docs",
+    "blog": "Blog",
+    "paper": "Paper"
+  },
+  "home": {
+    "eyebrow": "NSDI '24 · Beijing Institute of Technology",
+    "title": "Bringing Named Data Networking into the OS kernel",
+    "intro": "NDN forwards by name rather than address and keeps per-packet state in the data plane. iStack takes NDN into the OS kernel for the first time while staying compatible with the existing address-based stack and socket interfaces.",
+    "ctaDocs": "Read the docs",
+    "ctaPaper": "View the paper",
+    "stats": {
+      "throughputValue": "6.50 Gbps",
+      "throughputLabel": "Forwarding throughput",
+      "speedupValue": "16.25×",
+      "speedupLabel": "Over the NDN-testbed forwarder",
+      "latencyValue": "46.08%",
+      "latencyLabel": "Lower latency for cached packets"
+    },
+    "designTitle": "Three core designs",
+    "designIntro": "Building a stateful, purely name-based stack in a general-purpose OS means solving name resolution, address abstraction and per-packet state together.",
+    "designNrsTitle": "In-kernel name resolution",
+    "designNrsDesc": "A name resolution architecture that serves both network-layer forwarding and local packet demultiplexing, keeping lookups on the kernel data path.",
+    "designFacesTitle": "Two-layer face system",
+    "designFacesDesc": "A two-layer face abstraction over address-based interfaces such as MAC, IP and port, so a name-based stack can coexist with the kernel network architecture.",
+    "designSocketTitle": "Socket-compatible interfaces",
+    "designSocketDesc": "Socket-compatible APIs preserve the way applications use the network stack, paired with compact forwarding data structures to keep the memory footprint low.",
+    "resourcesTitle": "Keep exploring",
+    "resourcesIntro": "Read the docs for the system design, or go straight to the NSDI '24 paper and talk materials.",
+    "docsCardTitle": "Documentation",
+    "docsCardDesc": "Condensed notes on motivation, architecture and evaluation.",
+    "docsCardCta": "Open the docs",
+    "blogCardTitle": "Research blog",
+    "blogCardDesc": "Notes on NDN, in-kernel protocol stacks and stateful forwarding.",
+    "blogCardCta": "Read the blog",
+    "paperCardTitle": "Paper and video",
+    "paperCardDesc": "The official USENIX NSDI '24 page, PDF and presentation video.",
+    "paperCardCta": "Go to USENIX"
+  },
+  "docs": {
+    "title": "Documentation",
+    "intro": "Notes on the motivation, architecture and published evaluation of iStack. This is an initial version and will keep growing with the project.",
+    "empty": "No documents are available in this language yet.",
+    "back": "Back to the docs",
+    "sidebar": "In this section"
+  },
+  "blog": {
+    "title": "Blog",
+    "intro": "Design trade-offs, implementation details and observations from the research process.",
+    "empty": "No posts are available in this language yet.",
+    "readMore": "Read more",
+    "back": "Back to the blog",
+    "published": "Published on"
+  },
+  "footer": {
+    "desc": "NIP — a Named Data Networking research site around iStack.",
+    "links": "Links",
+    "paper": "NSDI '24 paper",
+    "usenix": "USENIX page",
+    "builtWith": "Built with Nuxt 4, Nuxt UI and Nuxt Content",
+    "rights": "All rights reserved."
+  }
+}
