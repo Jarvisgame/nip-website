@@ -109,7 +109,7 @@ useSeoMeta({
         >
           <span class="nip-kicker text-[#fd7800]">{{ t('home.heroKicker') }}</span>
           <div
-            class="flex flex-wrap items-center gap-x-5 gap-y-1 font-mono text-[9px] uppercase tracking-[0.16em] text-(--ui-text-muted)"
+            class="flex flex-wrap items-center gap-x-6 gap-y-1 font-mono text-[11px] uppercase tracking-[0.12em] text-(--ui-text-muted)"
           >
             <span>{{ t('home.heroMeta') }}</span>
             <span class="hidden sm:inline">{{ t('home.heroAffiliation') }}</span>
@@ -182,13 +182,13 @@ useSeoMeta({
 
             <div class="mt-9 flex flex-wrap items-center gap-x-5 gap-y-2">
               <p
-                class="font-mono text-[9px] uppercase leading-4 tracking-[0.14em] text-(--ui-text-muted)"
+                class="font-mono text-[11px] uppercase leading-5 tracking-[0.12em] text-(--ui-text-muted)"
               >
                 Tianlong Li · Tian Song · Yating Yang
               </p>
               <span class="hidden h-3 w-px bg-black/15 dark:bg-white/15 sm:block" />
               <p
-                class="font-mono text-[9px] uppercase leading-4 tracking-[0.14em] text-(--ui-text-muted)"
+                class="font-mono text-[11px] uppercase leading-5 tracking-[0.12em] text-(--ui-text-muted)"
               >
                 {{ t('home.heroAffiliation') }}
               </p>
@@ -209,12 +209,12 @@ useSeoMeta({
                 <span class="nip-kicker text-(--ui-text-muted)">
                   {{ t('home.paperLabel') }}
                 </span>
-                <span class="font-mono text-[10px] tracking-[0.12em] text-[#fd7800]">
+                <span class="font-mono text-[11px] tracking-[0.1em] text-[#fd7800]">
                   NSDI '24
                 </span>
               </div>
 
-              <p class="mt-7 font-mono text-[10px] uppercase tracking-[0.18em] text-[#fd7800]">
+              <p class="mt-7 font-mono text-[11px] uppercase tracking-[0.14em] text-[#fd7800]">
                 iStack
               </p>
               <h2
@@ -230,19 +230,19 @@ useSeoMeta({
                 class="mt-7 grid grid-cols-3 divide-x divide-black/10 border-y border-black/15 py-3 dark:divide-white/10 dark:border-white/15"
               >
                 <div class="pr-3">
-                  <p class="font-mono text-[8px] uppercase tracking-[0.12em] text-(--ui-text-muted)">
+                  <p class="font-mono text-[10px] uppercase tracking-[0.1em] text-(--ui-text-muted)">
                     Venue
                   </p>
                   <p class="mt-1 text-sm font-bold text-(--ui-text-highlighted)">NSDI '24</p>
                 </div>
                 <div class="px-3">
-                  <p class="font-mono text-[8px] uppercase tracking-[0.12em] text-(--ui-text-muted)">
+                  <p class="font-mono text-[10px] uppercase tracking-[0.1em] text-(--ui-text-muted)">
                     Stack
                   </p>
                   <p class="mt-1 text-sm font-bold text-(--ui-text-highlighted)">in-kernel</p>
                 </div>
                 <div class="pl-3">
-                  <p class="font-mono text-[8px] uppercase tracking-[0.12em] text-(--ui-text-muted)">
+                  <p class="font-mono text-[10px] uppercase tracking-[0.1em] text-(--ui-text-muted)">
                     Focus
                   </p>
                   <p class="mt-1 text-sm font-bold text-(--ui-text-highlighted)">NDN</p>
@@ -262,7 +262,7 @@ useSeoMeta({
                   :href="PAPER_URL"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[#fd7800] hover:underline"
+                  class="inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.1em] text-[#fd7800] hover:underline"
                 >
                   {{ t('home.paperPage') }}
                   <UIcon name="i-lucide-arrow-up-right" class="h-3.5 w-3.5" />
@@ -270,7 +270,7 @@ useSeoMeta({
               </div>
             </article>
             <div
-              class="mt-3 flex items-center justify-between gap-4 font-mono text-[8px] uppercase tracking-[0.16em] text-(--ui-text-muted)"
+              class="mt-3 flex items-center justify-between gap-4 font-mono text-[10px] uppercase tracking-[0.12em] text-(--ui-text-muted)"
             >
               <span>{{ t('home.paperCaption') }}</span>
               <span>NIP / 01</span>
@@ -288,7 +288,7 @@ useSeoMeta({
           <span class="nip-kicker text-(--ui-text-muted)">
             {{ t('home.statsLabel') }}
           </span>
-          <span class="max-w-xl font-mono text-[9px] leading-4 text-(--ui-text-muted)">
+          <span class="max-w-xl font-mono text-[10px] leading-5 text-(--ui-text-muted)">
             {{ t('home.statsNote') }}
           </span>
         </div>
@@ -301,7 +301,7 @@ useSeoMeta({
             <dd class="text-3xl font-black tracking-tight text-(--ui-text-highlighted) sm:text-4xl">
               {{ stat.value }}
             </dd>
-            <dt class="mt-2 max-w-[13rem] font-mono text-[9px] uppercase leading-4 tracking-[0.12em] text-(--ui-text-muted)">
+            <dt class="mt-2 max-w-[13rem] font-mono text-[10px] uppercase leading-5 tracking-[0.1em] text-(--ui-text-muted)">
               {{ stat.label }}
             </dt>
           </div>
@@ -328,7 +328,7 @@ useSeoMeta({
         <div class="mt-10 grid gap-x-6 gap-y-12 sm:grid-cols-2 2xl:grid-cols-4">
           <article v-for="pillar in pillars" :key="pillar.index" class="group">
             <LandingFeatureVisual :variant="pillar.variant" />
-            <p class="mt-4 font-mono text-[9px] tracking-[0.16em] text-[#fd7800]">
+            <p class="mt-4 font-mono text-[10px] tracking-[0.12em] text-[#fd7800]">
               {{ pillar.index }}
             </p>
             <h3
@@ -341,7 +341,7 @@ useSeoMeta({
             </p>
             <NuxtLink
               :to="pillar.to"
-              class="mt-4 inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.1em] text-[#fd7800] group-hover:underline"
+              class="mt-4 inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.1em] text-[#fd7800] group-hover:underline"
             >
               {{ t('home.pillarCta') }}
               <UIcon name="i-lucide-arrow-right" class="h-3.5 w-3.5" />
@@ -421,7 +421,7 @@ useSeoMeta({
             </p>
             <NuxtLink
               :to="localePath('/docs/performance')"
-              class="mt-6 inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.12em] underline decoration-black/40 underline-offset-4 hover:decoration-black"
+              class="mt-6 inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.1em] underline decoration-black/40 underline-offset-4 hover:decoration-black"
             >
               {{ t('home.evidenceCta') }}
               <UIcon name="i-lucide-arrow-right" class="h-3.5 w-3.5" />
@@ -440,12 +440,12 @@ useSeoMeta({
                 <dd class="text-4xl font-black tracking-tight 2xl:text-5xl">
                   {{ stat.value }}
                 </dd>
-                <dt class="mt-2 max-w-[12rem] font-mono text-[9px] uppercase leading-4 tracking-[0.12em] text-black/60">
+                <dt class="mt-2 max-w-[12rem] font-mono text-[10px] uppercase leading-5 tracking-[0.1em] text-black/60">
                   {{ stat.label }}
                 </dt>
               </div>
             </dl>
-            <p class="mt-5 max-w-2xl font-mono text-[9px] leading-4 text-black/55">
+            <p class="mt-5 max-w-2xl font-mono text-[10px] leading-5 text-black/55">
               {{ t('home.evidenceNote') }}
             </p>
           </div>
@@ -467,7 +467,7 @@ useSeoMeta({
                 :href="PAPER_URL"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.1em] text-[#fd7800] hover:underline"
+                class="inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.1em] text-[#fd7800] hover:underline"
               >
                 {{ t('home.paperPage') }}
                 <UIcon name="i-lucide-arrow-up-right" class="h-3.5 w-3.5" />
@@ -476,7 +476,7 @@ useSeoMeta({
                 :href="PAPER_PDF_URL"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.1em] text-(--ui-text-muted) hover:text-[#fd7800]"
+                class="inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.1em] text-(--ui-text-muted) hover:text-[#fd7800]"
               >
                 {{ t('home.pdfDownload') }}
                 <UIcon name="i-lucide-file-text" class="h-3.5 w-3.5" />
@@ -490,7 +490,7 @@ useSeoMeta({
             >
               {{ t('home.paperAbstract') }}
             </p>
-            <p class="mt-6 font-mono text-[9px] uppercase tracking-[0.16em] text-(--ui-text-muted)">
+            <p class="mt-6 font-mono text-[10px] uppercase tracking-[0.12em] text-(--ui-text-muted)">
               iStack / {{ t('home.paperVenue') }}
             </p>
           </div>
@@ -530,7 +530,7 @@ useSeoMeta({
               >
                 <div>
                   <p class="nip-kicker text-[#fd7800]">{{ t('home.noteTag') }}</p>
-                  <time v-if="note.date" class="mt-2 block font-mono text-[9px] leading-4 text-(--ui-text-muted)">
+                  <time v-if="note.date" class="mt-2 block font-mono text-[10px] leading-5 text-(--ui-text-muted)">
                     {{ formatDate(note.date) }}
                   </time>
                 </div>
@@ -547,7 +547,7 @@ useSeoMeta({
                     <span
                       v-for="tag in note.tags"
                       :key="tag"
-                      class="border border-black/10 px-2 py-0.5 font-mono text-[8px] uppercase tracking-[0.1em] text-(--ui-text-muted) dark:border-white/10"
+                      class="border border-black/10 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.08em] text-(--ui-text-muted) dark:border-white/10"
                     >
                       {{ tag }}
                     </span>
@@ -566,7 +566,7 @@ useSeoMeta({
                 <p class="nip-kicker text-(--ui-text-muted)">{{ t('home.docsLabel') }}</p>
                 <NuxtLink
                   :to="localePath('/docs')"
-                  class="font-mono text-[9px] uppercase tracking-[0.12em] text-[#fd7800] hover:underline"
+                  class="font-mono text-[10px] uppercase tracking-[0.1em] text-[#fd7800] hover:underline"
                 >
                   {{ t('home.allDocs') }} →
                 </NuxtLink>
@@ -579,7 +579,7 @@ useSeoMeta({
                   :to="localePath(`/docs/${document.slug}`)"
                   class="group grid grid-cols-[2rem_1fr_auto] gap-4 border-b border-black/10 py-4 dark:border-white/10"
                 >
-                  <span class="font-mono text-[10px] text-[#fd7800]">
+                  <span class="font-mono text-[11px] text-[#fd7800]">
                     {{ String(index + 1).padStart(2, '0') }}
                   </span>
                   <div>
@@ -588,7 +588,7 @@ useSeoMeta({
                     >
                       {{ document.title }}
                     </h3>
-                    <p class="mt-1 text-xs leading-5 text-(--ui-text-muted)">
+                    <p class="mt-1 text-sm leading-6 text-(--ui-text-muted)">
                       {{ document.description }}
                     </p>
                   </div>

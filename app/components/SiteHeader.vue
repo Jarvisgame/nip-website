@@ -43,19 +43,19 @@ function isActive(to: string) {
             NIP
           </span>
           <span
-            class="hidden border-l border-black/15 pl-3 font-mono text-[8px] uppercase leading-[1.35] tracking-[0.14em] text-(--ui-text-muted) dark:border-white/15 sm:block"
+            class="hidden border-l border-black/15 pl-3 font-mono text-[10px] uppercase leading-[1.4] tracking-[0.12em] text-(--ui-text-muted) dark:border-white/15 sm:block"
           >
             Named Data<br />
             Networking
           </span>
         </NuxtLink>
 
-        <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary">
+        <nav class="hidden items-center gap-6 lg:flex" aria-label="Primary">
           <NuxtLink
             v-for="item in nav"
             :key="item.to"
             :to="item.to"
-            class="relative py-2 text-[13px] font-medium transition-colors"
+            class="relative py-2 text-sm font-medium transition-colors"
             :class="
               isActive(item.to)
                 ? 'text-[#fd7800]'
@@ -75,10 +75,10 @@ function isActive(to: string) {
             :to="PAPER_URL"
             target="_blank"
             rel="noopener noreferrer"
-            class="mr-2 hidden items-center gap-1 font-mono text-[9px] uppercase tracking-[0.14em] text-[#fd7800] hover:underline md:inline-flex"
+            class="mr-2 hidden items-center gap-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[#fd7800] hover:underline md:inline-flex"
           >
             {{ t('nav.paper') }}
-            <UIcon name="i-lucide-arrow-up-right" class="h-3 w-3" />
+            <UIcon name="i-lucide-arrow-up-right" class="h-3.5 w-3.5" />
           </NuxtLink>
           <LocaleSwitcher />
           <UColorModeButton />
@@ -93,7 +93,7 @@ function isActive(to: string) {
           v-for="item in nav"
           :key="item.to"
           :to="item.to"
-          class="relative shrink-0 py-1 text-xs font-medium"
+          class="relative shrink-0 py-1 text-[13px] font-medium"
           :class="
             isActive(item.to)
               ? 'text-[#fd7800]'

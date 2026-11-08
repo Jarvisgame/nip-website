@@ -20,7 +20,7 @@ const homeAnchor = (hash: string) => `${homePath.value}${hash}`
               NIP
             </span>
             <span
-              class="mb-1 font-mono text-[8px] uppercase leading-[1.35] tracking-[0.14em] text-(--ui-text-muted)"
+              class="mb-1 font-mono text-[10px] uppercase leading-[1.4] tracking-[0.12em] text-(--ui-text-muted)"
             >
               Named Data<br />
               Networking
@@ -29,7 +29,7 @@ const homeAnchor = (hash: string) => `${homePath.value}${hash}`
           <p class="mt-5 max-w-md text-sm leading-6 text-(--ui-text-muted)">
             {{ t('footer.desc') }}
           </p>
-          <p class="mt-5 font-mono text-[9px] uppercase leading-4 tracking-[0.1em] text-(--ui-text-dimmed)">
+          <p class="mt-5 font-mono text-[10px] uppercase leading-5 tracking-[0.08em] text-(--ui-text-dimmed)">
             {{ t('footer.builtWith') }}
           </p>
         </div>
@@ -98,7 +98,7 @@ const homeAnchor = (hash: string) => `${homePath.value}${hash}`
       </div>
 
       <div
-        class="mt-10 flex flex-col gap-2 border-t border-black/10 pt-5 font-mono text-[9px] uppercase tracking-[0.1em] text-(--ui-text-dimmed) dark:border-white/10 sm:flex-row sm:items-center sm:justify-between"
+        class="mt-10 flex flex-col gap-2 border-t border-black/10 pt-5 font-mono text-[10px] uppercase tracking-[0.08em] text-(--ui-text-dimmed) dark:border-white/10 sm:flex-row sm:items-center sm:justify-between"
       >
         <p>© {{ year }} NIP. {{ t('footer.rights') }}</p>
         <p>NSDI '24 · iStack</p>

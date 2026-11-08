@@ -34,10 +34,10 @@ html {
 
 .nip-kicker {
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  line-height: 1.4;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
   text-transform: uppercase;
 }
 
@@ -64,7 +64,7 @@ body {
 }
 
 .content-body {
-  font-size: 1rem;
+  font-size: 1.0625rem;
   line-height: 1.85;
   color: var(--ui-text);
 }

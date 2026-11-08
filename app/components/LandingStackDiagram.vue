@@ -48,7 +48,7 @@ const rows = [
       class="flex items-center justify-between border-b border-white/10 px-4 py-3 sm:px-6"
     >
       <span class="nip-kicker text-white/40">iStack / data plane</span>
-      <span class="font-mono text-[10px] tracking-[0.16em] text-[#fd7800]">
+      <span class="font-mono text-[11px] tracking-[0.12em] text-[#fd7800]">
         NSDI '24
       </span>
     </div>
@@ -62,10 +62,10 @@ const rows = [
         <li
           v-for="(row, index) in rows"
           :key="row.label"
-          class="grid grid-cols-[2.2rem_1fr] items-stretch gap-3 sm:grid-cols-[4.1rem_1fr]"
+          class="grid grid-cols-[2.75rem_1fr] items-stretch gap-3 sm:grid-cols-[4.4rem_1fr]"
         >
           <span
-            class="pt-3 font-mono text-[8px] uppercase leading-none tracking-[0.14em] text-white/30"
+            class="pt-3 font-mono text-[10px] uppercase leading-tight tracking-[0.1em] text-white/30"
           >
             {{ row.side }}
           </span>
@@ -79,15 +79,15 @@ const rows = [
             "
           >
             <div class="flex items-center gap-3">
-              <span class="font-mono text-[9px] text-white/25">
+              <span class="font-mono text-[10px] text-white/25">
                 {{ String(index + 1).padStart(2, '0') }}
               </span>
-              <span class="text-[13px] font-medium text-white sm:text-sm">
+              <span class="text-sm font-medium text-white sm:text-[15px]">
                 {{ row.label }}
               </span>
             </div>
             <span
-              class="hidden font-mono text-[8px] uppercase tracking-[0.12em] text-white/30 sm:block"
+              class="hidden font-mono text-[10px] uppercase leading-4 tracking-[0.08em] text-white/30 sm:block"
             >
               {{ row.note }}
             </span>
@@ -100,7 +100,7 @@ const rows = [
       </ul>
 
       <div
-        class="mt-5 flex flex-wrap items-center gap-2 border-t border-white/10 pt-4 font-mono text-[9px] uppercase tracking-[0.12em]"
+        class="mt-5 flex flex-wrap items-center gap-2 border-t border-white/10 pt-4 font-mono text-[10px] uppercase tracking-[0.1em]"
       >
         <span class="bg-[#fd7800] px-2 py-1 text-black">Interest</span>
         <span class="text-white/25">→</span>

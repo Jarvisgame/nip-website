@@ -492,7 +492,7 @@ const meta = computed(
     </svg>
 
     <span
-      class="absolute right-3 top-2 font-mono text-[8px] uppercase tracking-[0.18em] text-black/40 dark:text-white/40"
+      class="absolute right-3 top-2 font-mono text-[10px] uppercase tracking-[0.12em] text-black/40 dark:text-white/40"
     >
       {{ meta.code }}
     </span>
