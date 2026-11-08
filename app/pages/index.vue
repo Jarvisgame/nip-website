@@ -4,30 +4,8 @@ type FeatureVariant = 'kernel' | 'names' | 'faces' | 'numbers'
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
 
-const toContentPath = (path: string) =>
-  path.replace(/\/(docs|blog)\/[^/]+/, '/$1')
-
-const { data: notes } = await useAsyncData(
-  () => `home-notes-${locale.value}`,
-  () =>
-    queryCollection('blog')
-      .where('path', 'LIKE', `/blog/${locale.value}/%`)
-      .order('date', 'DESC')
-      .limit(2)
-      .all(),
-  { watch: [locale] }
-)
-
-const { data: documents } = await useAsyncData(
-  () => `home-docs-${locale.value}`,
-  () =>
-    queryCollection('docs')
-      .where('path', 'LIKE', `/docs/${locale.value}/%`)
-      .order('order', 'ASC')
-      .limit(3)
-      .all(),
-  { watch: [locale] }
-)
+const { data: notes } = await useContentList('blog', locale)
+const { data: documents } = await useContentList('docs', locale)
 
 const stats = computed(() => [
   {
@@ -101,7 +79,8 @@ const principles = computed(() => [
   }
 ])
 
-function formatDate(value: string) {
+function formatDate(value: string | null) {
+  if (!value) return ''
   return new Intl.DateTimeFormat(locale.value === 'zh' ? 'zh-CN' : 'en-US', {
     year: 'numeric',
     month: 'short',
@@ -542,16 +521,16 @@ useSeoMeta({
           </div>
 
           <div>
-            <template v-if="notes?.length">
+            <template v-if="notes?.items?.length">
               <NuxtLink
-                v-for="note in notes"
-                :key="note.path"
-                :to="localePath(toContentPath(note.path))"
+                v-for="note in notes.items"
+                :key="note.id"
+                :to="localePath(`/blog/${note.slug}`)"
                 class="group grid gap-4 border-t border-black/10 py-6 dark:border-white/10 sm:grid-cols-[6.5rem_1fr]"
               >
                 <div>
                   <p class="nip-kicker text-[#fd7800]">{{ t('home.noteTag') }}</p>
-                  <time class="mt-2 block font-mono text-[9px] leading-4 text-(--ui-text-muted)">
+                  <time v-if="note.date" class="mt-2 block font-mono text-[9px] leading-4 text-(--ui-text-muted)">
                     {{ formatDate(note.date) }}
                   </time>
                 </div>
@@ -561,10 +540,10 @@ useSeoMeta({
                   >
                     {{ note.title }}
                   </h3>
-                  <p class="mt-2 text-sm leading-6 text-(--ui-text-muted)">
+                  <p v-if="note.description" class="mt-2 text-sm leading-6 text-(--ui-text-muted)">
                     {{ note.description }}
                   </p>
-                  <div v-if="note.tags?.length" class="mt-3 flex flex-wrap gap-2">
+                  <div v-if="note.tags.length" class="mt-3 flex flex-wrap gap-2">
                     <span
                       v-for="tag in note.tags"
                       :key="tag"
@@ -593,11 +572,11 @@ useSeoMeta({
                 </NuxtLink>
               </div>
 
-              <template v-if="documents?.length">
+              <template v-if="documents?.items?.length">
                 <NuxtLink
-                  v-for="(document, index) in documents"
-                  :key="document.path"
-                  :to="localePath(toContentPath(document.path))"
+                  v-for="(document, index) in documents.items"
+                  :key="document.id"
+                  :to="localePath(`/docs/${document.slug}`)"
                   class="group grid grid-cols-[2rem_1fr_auto] gap-4 border-b border-black/10 py-4 dark:border-white/10"
                 >
                   <span class="font-mono text-[10px] text-[#fd7800]">

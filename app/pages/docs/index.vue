@@ -2,17 +2,7 @@
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
 
-const toRoutePath = (path: string) => path.replace(/^\/docs\/[^/]+/, '/docs')
-
-const { data: docs } = await useAsyncData(
-  () => `docs-list-${locale.value}`,
-  () =>
-    queryCollection('docs')
-      .where('path', 'LIKE', `/docs/${locale.value}/%`)
-      .order('order', 'ASC')
-      .all(),
-  { watch: [locale] }
-)
+const { data: docs } = await useContentList('docs', locale)
 
 useSeoMeta({
   title: computed(() => `${t('docs.title')} · NIP`),
@@ -33,11 +23,11 @@ useSeoMeta({
       </p>
     </div>
 
-    <div v-if="docs?.length" class="mt-10 grid gap-4 sm:grid-cols-2">
+    <div v-if="docs?.items?.length" class="mt-10 grid gap-4 sm:grid-cols-2">
       <NuxtLink
-        v-for="doc in docs"
-        :key="doc.path"
-        :to="localePath(toRoutePath(doc.path))"
+        v-for="doc in docs.items"
+        :key="doc.id"
+        :to="localePath(`/docs/${doc.slug}`)"
         class="group rounded-xl border border-(--ui-border) bg-(--ui-bg) p-6 transition hover:border-(--ui-primary)/50"
       >
         <h2
@@ -45,7 +35,10 @@ useSeoMeta({
         >
           {{ doc.title }}
         </h2>
-        <p class="mt-2 text-sm leading-6 text-(--ui-text-muted)">
+        <p
+          v-if="doc.description"
+          class="mt-2 text-sm leading-6 text-(--ui-text-muted)"
+        >
           {{ doc.description }}
         </p>
         <span

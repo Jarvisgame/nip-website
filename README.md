@@ -9,8 +9,10 @@
 
 - Nuxt 4（Vue 3、Nitro）
 - Nuxt UI 4 + Tailwind CSS 4
-- Nuxt Content 3（Markdown 内容）
 - @nuxtjs/i18n 10（中文默认，英文使用 `/en` 前缀）
+- Notion API（`@notionhq/client`、`notion-to-md`、`marked`）
+- Cloudflare Workers + Wrangler
+- Cloudflare KV（Notion 内容缓存）
 - pnpm 12 + Node.js 24（安装在 conda 环境中）
 
 ## 开发环境
@@ -26,10 +28,14 @@
 ```powershell
 conda activate nip-website
 pnpm install
+Copy-Item .env.example .env
+# 在 .env 中填写 NOTION_API_KEY、NOTION_DOCS_DATA_SOURCE_ID、NOTION_BLOG_DATA_SOURCE_ID
 pnpm dev
 ```
 
 打开 <http://localhost:3000>。
+
+Notion 内容在开发环境下使用进程内缓存；生产环境使用 Cloudflare KV。
 
 如果代理不可用，可以临时清除环境变量后再运行：
 
@@ -44,10 +50,18 @@ conda activate nip-website
 ```powershell
 conda activate nip-website
 pnpm build
-pnpm preview
+pnpm preview:worker
 ```
 
-默认产物为 Node 服务器（`.output/server/index.mjs`），也可以接入任意支持 Nitro 的部署平台。
+构建目标是 Cloudflare Workers（`cloudflare_module`），产物位于 `.output/`。
+
+本地使用 Worker 运行时预览：
+
+```powershell
+Copy-Item .dev.vars.example .dev.vars
+# 在 .dev.vars 中填写 Notion 配置
+pnpm preview:worker
+```
 
 ## 目录结构
 
@@ -55,6 +69,7 @@ pnpm preview
 app/
   assets/css/main.css       全局样式与 Markdown 正文排版
   components/               站点头部、页脚、语言切换与首页图形组件
+  composables/useContent.ts  Notion 内容列表/详情请求封装
   layouts/default.vue       默认布局
   pages/
     index.vue               首页
@@ -63,55 +78,126 @@ app/
     blog/index.vue          博客列表
     blog/[...slug].vue      博客详情
   utils/site.ts             论文等外部链接常量
-content/
-  docs/zh/*.md              中文文档
-  docs/en/*.md              英文文档
-  blog/zh/*.md              中文博客
-  blog/en/*.md              英文博客
+server/
+  api/content/              Notion 内容 API（列表、详情、缓存失效）
+  utils/notion-content.ts   Notion 查询、Markdown 转换与 KV 缓存
+shared/types/content.ts     API 数据结构
+scripts/setup-notion.mjs    创建字段并迁移 Markdown 到 Notion
+.env.example                Node 开发环境变量示例
+.dev.vars.example           Wrangler 本地环境变量示例
+wrangler.jsonc              Worker、KV 与 nip.notfatdog.com 配置
 i18n/locales/
   zh.json                   中文界面文案
   en.json                   英文界面文案
-content.config.ts           Nuxt Content 集合定义
-nuxt.config.ts              Nuxt 模块与 i18n 配置
+nuxt.config.ts              Nuxt 模块、i18n 与 Cloudflare preset
 ```
 
-## 添加内容
+## Notion 内容模型
 
-### 文档
+运行时内容来自两个 Notion 数据库。请在 Notion 中创建数据库，并把它们共享给同一个 Notion Integration。
 
-在 `content/docs/zh/<slug>.md` 与 `content/docs/en/<slug>.md` 中各创建一份：
+### Docs 数据库
 
-```md
----
-title: 标题
-description: 一句话摘要
-order: 4
----
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| `Name` | Title | 文档标题 |
+| `Slug` | Rich text | URL slug，例如 `getting-started` |
+| `Description` | Rich text | 列表摘要 |
+| `Locale` | Select | `zh` 或 `en` |
+| `Order` | Number | 侧边栏排序 |
+| `Published` | Checkbox | 未勾选的内容不会返回 |
 
-正文……
+### Blog 数据库
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| `Name` | Title | 文章标题 |
+| `Slug` | Rich text | URL slug |
+| `Description` | Rich text | 列表摘要 |
+| `Locale` | Select | `zh` 或 `en` |
+| `Date` | Date | 发布日期 |
+| `Tags` | Multi-select | 文章标签 |
+| `Published` | Checkbox | 未勾选的内容不会返回 |
+
+每个数据库页面的正文就是文档/博客内容。`notion-to-md` 会递归读取页面块并转成 Markdown，再由 `marked` 渲染为 HTML。
+
+当前数据库的 title 属性是 `名称`，代码会自动识别任意 title 属性；其余字段默认使用上表中的英文名称。
+
+默认属性名就是上表列出的名称。如果实际名称不同，可以在 `.env` 或 `.dev.vars` 中覆盖，例如：
+
+```dotenv
+NOTION_TITLE_PROPERTY=Title
+NOTION_SLUG_PROPERTY=Slug
+NOTION_DESCRIPTION_PROPERTY=Summary
+NOTION_LOCALE_PROPERTY=Language
+NOTION_ORDER_PROPERTY=Order
+NOTION_DATE_PROPERTY=Date
+NOTION_TAGS_PROPERTY=Tags
+NOTION_PUBLISHED_PROPERTY=Published
+NOTION_DEFAULT_LOCALE=zh
 ```
 
-`order` 决定侧边栏排序。
+如果数据库没有 `Slug`，会先尝试从标题生成；中文标题通常无法生成稳定 slug，因此建议显式填写。标题属性可以是任意名称，代码会回退到数据库的 title 属性。
 
-### 博客
+如果要从仓库中的旧 Markdown 初始化 Notion，运行：
 
-在 `content/blog/zh/<slug>.md` 与 `content/blog/en/<slug>.md` 中各创建一份：
-
-```md
----
-title: 标题
-description: 一句话摘要
-date: '2026-11-02'
-tags:
-  - NDN
----
-
-正文……
+```powershell
+pnpm setup:notion
 ```
 
-### 界面文案
+该脚本会补齐缺失字段、跳过已存在的同 `Locale + Slug` 页面，并创建新页面。当前仓库内容已经迁移完成，`content/` 已移除；脚本保留用于以后恢复旧 Markdown 或重新导入时使用。
 
-`i18n/locales/zh.json` 与 `en.json` 保存导航、首页、页脚等文案，键名保持一致。
+
+## Cloudflare 部署
+
+`wrangler.jsonc` 已配置：
+
+- Worker 名称：`nip-website`
+- KV binding：`NIP_CACHE`
+- Custom Domain：`nip.notfatdog.com`
+
+首次部署：
+
+```powershell
+conda activate nip-website
+pnpm install
+
+# 创建 KV namespace，把返回的 id 填到 wrangler.jsonc
+pnpm exec wrangler kv namespace create NIP_CACHE
+
+# 不要把 token 写进代码仓库
+pnpm exec wrangler secret put NOTION_API_KEY
+# 优先使用 data source ID；没有 data source ID 时才使用 database ID
+pnpm exec wrangler secret put NOTION_DOCS_DATA_SOURCE_ID
+pnpm exec wrangler secret put NOTION_BLOG_DATA_SOURCE_ID
+
+# pnpm deploy 是 pnpm 自带命令，不能直接执行 npm script
+pnpm run deploy:worker
+```
+
+`nip.notfatdog.com` 必须位于同一个 Cloudflare 账户的 `notfatdog.com` zone 下。部署后 Cloudflare 会自动创建 DNS 记录并签发证书，不需要手动上传证书。
+
+如果 `nip` 子域已有 CNAME 或其他记录，请先处理记录冲突。
+
+## 缓存与失效
+
+- 列表缓存：5 分钟
+- 详情缓存：1 小时
+- 生产环境使用 KV binding `NIP_CACHE`；Node 开发环境使用进程内缓存
+- 所有缓存键以 `nip:v1:` 开头
+
+手动清理缓存：
+
+```powershell
+$token = $env:NIP_REVALIDATE_TOKEN
+Invoke-RestMethod -Method Post `
+  -Uri https://nip.notfatdog.com/api/content/revalidate `
+  -Headers @{ 'x-revalidate-token' = $token }
+```
+
+需要在 Cloudflare 中配置 `NIP_REVALIDATE_TOKEN` secret 才能使用该接口。
+
+Notion 托管的图片 URL 有时效性；详情缓存为 1 小时，如果图片在缓存末尾失效，可以缩短详情缓存 TTL，或后续增加图片代理。
 
 ## 说明
 

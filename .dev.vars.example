@@ -1,0 +1,24 @@
+# Copy this file to .dev.vars for `pnpm dev:worker` / `wrangler dev`.
+# Never commit .dev.vars.
+NOTION_API_KEY=ntn_xxxxxxxxxxxx
+# 推荐使用 data source ID
+NOTION_DOCS_DATA_SOURCE_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+NOTION_BLOG_DATA_SOURCE_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# Optional: use database IDs instead of data source IDs.
+# NOTION_DOCS_DATABASE_ID=
+# NOTION_BLOG_DATABASE_ID=
+
+# Optional: override the Notion property names.
+# NOTION_TITLE_PROPERTY=Name
+# NOTION_SLUG_PROPERTY=Slug
+# NOTION_DESCRIPTION_PROPERTY=Description
+# NOTION_LOCALE_PROPERTY=Locale
+# NOTION_ORDER_PROPERTY=Order
+# NOTION_DATE_PROPERTY=Date
+# NOTION_TAGS_PROPERTY=Tags
+# NOTION_PUBLISHED_PROPERTY=Published
+# NOTION_DEFAULT_LOCALE=zh
+
+# Optional: token for POST /api/content/revalidate
+# NIP_REVALIDATE_TOKEN=

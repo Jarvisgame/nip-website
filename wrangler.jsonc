@@ -1,0 +1,26 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "nip-website",
+	"compatibility_date": "2025-07-15",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"observability": {
+		"enabled": true
+	},
+	// KV cache used by server/utils/notion-content.ts
+	"kv_namespaces": [
+		{
+			"binding": "NIP_CACHE",
+			"id": "0ceee0d97282487c8c42d48243faaf37",
+			"remote": true
+		}
+	],
+	// Cloudflare will create the DNS record and certificate for this subdomain.
+	"routes": [
+		{
+			"pattern": "nip.notfatdog.com",
+			"custom_domain": true
+		}
+	]
+}

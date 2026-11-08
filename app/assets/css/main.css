@@ -189,3 +189,24 @@ body {
   border: 0;
   border-top: 1px solid var(--ui-border);
 }
+
+.content-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--ui-border);
+}
+
+.content-body figure {
+  margin: 1.5rem 0;
+}
+
+.content-body figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--ui-text-muted);
+}
+
+.content-body iframe {
+  max-width: 100%;
+}

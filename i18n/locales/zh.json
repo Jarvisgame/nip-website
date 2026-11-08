@@ -108,7 +108,7 @@
     "external": "外部资源",
     "paper": "NSDI '24 论文",
     "usenix": "USENIX 页面",
-    "builtWith": "基于 Nuxt 4、Nuxt UI 与 Nuxt Content 构建",
+    "builtWith": "基于 Nuxt 4、Nuxt UI、Notion API 与 Cloudflare Workers 构建",
     "rights": "保留所有权利。"
   }
 }

@@ -2,19 +2,10 @@
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
 
-const toRoutePath = (path: string) => path.replace(/^\/blog\/[^/]+/, '/blog')
+const { data: posts } = await useContentList('blog', locale)
 
-const { data: posts } = await useAsyncData(
-  () => `blog-list-${locale.value}`,
-  () =>
-    queryCollection('blog')
-      .where('path', 'LIKE', `/blog/${locale.value}/%`)
-      .order('date', 'DESC')
-      .all(),
-  { watch: [locale] }
-)
-
-function formatDate(value: string) {
+function formatDate(value: string | null) {
+  if (!value) return ''
   return new Intl.DateTimeFormat(locale.value === 'zh' ? 'zh-CN' : 'en-US', {
     year: 'numeric',
     month: 'short',
@@ -41,17 +32,17 @@ useSeoMeta({
       </p>
     </div>
 
-    <div v-if="posts?.length" class="mt-10 space-y-4">
+    <div v-if="posts?.items?.length" class="mt-10 space-y-4">
       <article
-        v-for="post in posts"
-        :key="post.path"
+        v-for="post in posts.items"
+        :key="post.id"
         class="rounded-xl border border-(--ui-border) bg-(--ui-bg) p-6 transition hover:border-(--ui-primary)/50"
       >
         <NuxtLink
-          :to="localePath(toRoutePath(post.path))"
+          :to="localePath(`/blog/${post.slug}`)"
           class="group block"
         >
-          <time class="text-xs text-(--ui-text-muted)">
+          <time v-if="post.date" class="text-xs text-(--ui-text-muted)">
             {{ formatDate(post.date) }}
           </time>
           <h2
@@ -59,10 +50,13 @@ useSeoMeta({
           >
             {{ post.title }}
           </h2>
-          <p class="mt-2 text-sm leading-6 text-(--ui-text-muted)">
+          <p
+            v-if="post.description"
+            class="mt-2 text-sm leading-6 text-(--ui-text-muted)"
+          >
             {{ post.description }}
           </p>
-          <div v-if="post.tags?.length" class="mt-4 flex flex-wrap gap-2">
+          <div v-if="post.tags.length" class="mt-4 flex flex-wrap gap-2">
             <UBadge
               v-for="tag in post.tags"
               :key="tag"

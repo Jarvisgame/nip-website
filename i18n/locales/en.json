@@ -108,7 +108,7 @@
     "external": "External",
     "paper": "NSDI '24 paper",
     "usenix": "USENIX page",
-    "builtWith": "Built with Nuxt 4, Nuxt UI and Nuxt Content",
+    "builtWith": "Built with Nuxt 4, Nuxt UI, Notion API and Cloudflare Workers",
     "rights": "All rights reserved."
   }
 }
