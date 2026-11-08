@@ -54,7 +54,7 @@ pnpm preview
 ```text
 app/
   assets/css/main.css       全局样式与 Markdown 正文排版
-  components/               站点头部、页脚、语言切换
+  components/               站点头部、页脚、语言切换与首页图形组件
   layouts/default.vue       默认布局
   pages/
     index.vue               首页
@@ -116,4 +116,13 @@ tags:
 ## 说明
 
 站点内容目前基于论文摘要整理，技术细节以论文原文为准。论文与 PDF 链接集中在 `app/utils/site.ts`。
+
+## 首页设计
+
+首页参考 [Named Data Networking](https://named-data.net/) 的编辑式排版：白底、黑色正文、橙色强调色与紧凑的大写标题。品牌主色使用 `#fd7800`，与 iStack 的论文气质和 NDN 项目的视觉语言保持一致。
+
+- `app/pages/index.vue` 负责 landing 页面的内容编排，包括论文摘要、指标、四条研究支柱、内核数据路径、评测与内容入口。
+- `app/components/LandingFeatureVisual.vue` 使用静态 SVG 绘制四组研究视觉：内核栈、名字前缀树、双层 face 与评测柱状图。
+- `app/components/LandingStackDiagram.vue` 绘制 iStack 的静态数据平面示意。
+- 页面不包含任何动态背景、Canvas 动画或 WebGL 渲染；所有图形均为静态 SVG/CSS。
 

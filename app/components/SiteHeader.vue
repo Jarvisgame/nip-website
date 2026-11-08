@@ -3,15 +3,25 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 const route = useRoute()
 
+const homePath = computed(() => localePath('/'))
+const homeAnchor = (hash: string) => `${homePath.value}${hash}`
+
 const nav = computed(() => [
-  { label: t('nav.home'), to: localePath('/') },
+  { label: t('nav.home'), to: homePath.value },
+  { label: t('nav.architecture'), to: homeAnchor('#architecture') },
+  { label: t('nav.evidence'), to: homeAnchor('#evidence') },
   { label: t('nav.docs'), to: localePath('/docs') },
   { label: t('nav.blog'), to: localePath('/blog') }
 ])
 
 function isActive(to: string) {
-  if (to === localePath('/')) {
+  if (to === homePath.value) {
     return route.path === to || route.path === `${to}/`
+  }
+
+  if (to.includes('#')) {
+    const [path, hash] = to.split('#')
+    return route.path === path && route.hash === `#${hash}`
   }
 
   return route.path === to || route.path.startsWith(`${to}/`)
@@ -20,71 +30,78 @@ function isActive(to: string) {
 
 <template>
   <header
-    class="sticky top-0 z-50 border-b border-(--ui-border) bg-(--ui-bg)"
+    class="sticky top-0 z-50 border-b border-black/10 bg-(--ui-bg)/95 backdrop-blur dark:border-white/10"
   >
     <UContainer>
-      <div class="flex h-16 items-center justify-between gap-3">
+      <div class="flex h-20 items-center justify-between gap-4">
         <NuxtLink
           :to="localePath('/')"
-          class="flex items-center gap-2.5 rounded-md focus-visible:outline-2 focus-visible:outline-(--ui-primary)"
+          class="flex shrink-0 items-center gap-3 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#fd7800]"
+          :aria-label="t('site.name')"
         >
-          <span
-            class="grid h-9 w-9 place-items-center rounded-lg bg-(--ui-primary) text-sm font-bold text-white"
-          >
+          <span class="nip-display text-[2rem] leading-none text-[#fd7800]">
             NIP
           </span>
-          <span class="hidden flex-col leading-tight sm:flex">
-            <span class="text-sm font-semibold text-(--ui-text-highlighted)">
-              {{ t('site.name') }}
-            </span>
-            <span class="text-xs text-(--ui-text-muted)">
-              {{ t('site.tagline') }}
-            </span>
+          <span
+            class="hidden border-l border-black/15 pl-3 font-mono text-[8px] uppercase leading-[1.35] tracking-[0.14em] text-(--ui-text-muted) dark:border-white/15 sm:block"
+          >
+            Named Data<br />
+            Networking
           </span>
         </NuxtLink>
 
-        <nav class="hidden items-center gap-1 sm:flex">
-          <UButton
+        <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary">
+          <NuxtLink
             v-for="item in nav"
             :key="item.to"
             :to="item.to"
-            variant="ghost"
-            :color="isActive(item.to) ? 'primary' : 'neutral'"
-            size="sm"
+            class="relative py-2 text-[13px] font-medium transition-colors"
+            :class="
+              isActive(item.to)
+                ? 'text-[#fd7800]'
+                : 'text-(--ui-text-toned) hover:text-(--ui-text-highlighted)'
+            "
           >
             {{ item.label }}
-          </UButton>
+            <span
+              v-if="isActive(item.to)"
+              class="absolute inset-x-0 -bottom-px h-0.5 bg-[#fd7800]"
+            />
+          </NuxtLink>
         </nav>
 
         <div class="flex items-center gap-1">
-          <UButton
+          <NuxtLink
             :to="PAPER_URL"
             target="_blank"
             rel="noopener noreferrer"
-            variant="ghost"
-            color="neutral"
-            size="sm"
-            icon="i-lucide-file-text"
-            class="hidden md:inline-flex"
+            class="mr-2 hidden items-center gap-1 font-mono text-[9px] uppercase tracking-[0.14em] text-[#fd7800] hover:underline md:inline-flex"
           >
             {{ t('nav.paper') }}
-          </UButton>
+            <UIcon name="i-lucide-arrow-up-right" class="h-3 w-3" />
+          </NuxtLink>
           <LocaleSwitcher />
           <UColorModeButton />
         </div>
       </div>
 
-      <nav class="flex items-center gap-1 pb-3 sm:hidden">
-        <UButton
+      <nav
+        class="flex items-center gap-5 overflow-x-auto pb-3 lg:hidden"
+        aria-label="Primary mobile"
+      >
+        <NuxtLink
           v-for="item in nav"
           :key="item.to"
           :to="item.to"
-          variant="ghost"
-          :color="isActive(item.to) ? 'primary' : 'neutral'"
-          size="sm"
+          class="relative shrink-0 py-1 text-xs font-medium"
+          :class="
+            isActive(item.to)
+              ? 'text-[#fd7800]'
+              : 'text-(--ui-text-muted)'
+          "
         >
           {{ item.label }}
-        </UButton>
+        </NuxtLink>
       </nav>
     </UContainer>
   </header>
